@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Avatar } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
@@ -71,9 +70,7 @@ const PatientCard: React.FC<PatientCardProps> = (patient) => {
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Avatar className="h-8 w-8 text-xs">
-              {patient.name.split(' ').map(n => n[0]).join('')}
-            </Avatar>
+            <Avatar className="h-8 w-8 bg-muted" />
             <div>
               <h3 className="font-medium text-sm">{patient.name}</h3>
               <p className="text-xs text-muted-foreground">{patient.age} yrs, {patient.gender}</p>

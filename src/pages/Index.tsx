@@ -1,4 +1,3 @@
-
 import React from 'react';
 import TriageColumn from '@/components/TriageColumn';
 import TriageCountSummary from '@/components/TriageCountSummary';
@@ -22,7 +21,8 @@ const Index = () => {
       </header>
       
       <div className="flex-grow p-4 flex flex-col">
-        <main className="flex flex-1 gap-3 overflow-hidden">
+        <TriageCountSummary counts={patientCounts} />
+        <main className="flex flex-1 gap-3 overflow-hidden mt-4">
           <TriageColumn 
             level={1} 
             title="Critical" 
@@ -49,8 +49,6 @@ const Index = () => {
             patients={nonUrgentPatients} 
           />
         </main>
-        
-        <TriageCountSummary counts={patientCounts} />
       </div>
     </div>
   );
