@@ -160,7 +160,7 @@ export const mockPatients: Patient[] = patientData.map(p => ({
   name: `Patient ${p.ID + 1}`,
   age: p.age,
   gender: getGenderString(p.gender),
-  urgency: Math.max(0, Math.min(100, (6 - p.display_triage_level) * 20)), // Convert triage level to urgency percentage
+  urgency: Math.max(0, Math.min(100, (6 - p.display_triage_level) * 20)),
   triageLevel: p.display_triage_level as 1 | 2 | 3 | 4 | 5,
   chestPainType: getChestPainType(p['chest pain type']),
   cholesterol: p.cholesterol,
@@ -178,7 +178,7 @@ export const mockPatients: Patient[] = patientData.map(p => ({
   respiratoryRate: p['Respiratory Rate (breaths/min)'],
   bloodPressure: p['Blood Pressure (mmHg)'],
   spO2: p['SpO2 (%)'],
-  glasgowScore: p.Glasgow_Score,
+  glasgowScore: p['Glasgow Score'],
   consciousness: p.Consciousness,
   massiveBleeding: false,
   respiratoryDistress: false,
