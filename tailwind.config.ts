@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,14 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Triage level colors
+				triage: {
+					'level1': '#DC2626', // Red (Critical)
+					'level2': '#EA580C', // Orange (Emergency)
+					'level3': '#CA8A04', // Yellow (Urgent)
+					'level4': '#16A34A', // Green (Standard)
+					'level5': '#2563EB', // Blue (Non-urgent)
 				}
 			},
 			borderRadius: {
