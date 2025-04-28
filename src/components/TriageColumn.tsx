@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import PatientCard from './PatientCard';
@@ -10,6 +9,27 @@ export type Patient = {
   gender: string;
   urgency: number;
   triageLevel: 1 | 2 | 3 | 4 | 5;
+  chestPainType: string;
+  cholesterol: number;
+  exerciseAngina: boolean;
+  plasmaGlucose: number;
+  skinThickness: number;
+  bmi: number;
+  hypertension: boolean;
+  heartDisease: boolean;
+  residenceType: string;
+  smokingStatus: string;
+  symptoms: string[];
+  temperature: number;
+  heartRate: number;
+  respiratoryRate: number;
+  bloodPressure: string;
+  spO2: number;
+  glasgowScore: number;
+  consciousness: string;
+  massiveBleeding: boolean;
+  respiratoryDistress: boolean;
+  riskFactors: string[];
 };
 
 interface TriageColumnProps {
@@ -41,7 +61,6 @@ const getBorderColor = (level: number) => {
 };
 
 const TriageColumn: React.FC<TriageColumnProps> = ({ level, title, patients }) => {
-  // Sort patients by urgency (highest first)
   const sortedPatients = [...patients].sort((a, b) => b.urgency - a.urgency);
   
   return (

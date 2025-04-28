@@ -1,10 +1,7 @@
-
 import { Patient } from '@/components/TriageColumn';
 
-// Generate a unique ID 
 const generateId = () => Math.random().toString(36).substring(2, 10);
 
-// Function to create a patient
 const createPatient = (
   name: string, 
   age: number, 
@@ -17,10 +14,30 @@ const createPatient = (
   age,
   gender,
   urgency,
-  triageLevel
+  triageLevel,
+  chestPainType: ['Typical Angina', 'Atypical Angina', 'Non-Anginal', 'Asymptomatic'][Math.floor(Math.random() * 4)],
+  cholesterol: Math.floor(Math.random() * (300 - 150) + 150),
+  exerciseAngina: Math.random() > 0.5,
+  plasmaGlucose: Math.floor(Math.random() * (200 - 70) + 70),
+  skinThickness: Math.floor(Math.random() * (50 - 10) + 10),
+  bmi: Number((Math.random() * (35 - 18) + 18).toFixed(1)),
+  hypertension: Math.random() > 0.7,
+  heartDisease: Math.random() > 0.8,
+  residenceType: Math.random() > 0.5 ? 'Urban' : 'Rural',
+  smokingStatus: ['Never', 'Former', 'Current'][Math.floor(Math.random() * 3)],
+  symptoms: ['Chest Pain', 'Shortness of Breath', 'Fatigue'].filter(() => Math.random() > 0.5),
+  temperature: Number((Math.random() * (39 - 36) + 36).toFixed(1)),
+  heartRate: Math.floor(Math.random() * (120 - 60) + 60),
+  respiratoryRate: Math.floor(Math.random() * (30 - 12) + 12),
+  bloodPressure: `${Math.floor(Math.random() * (180 - 90) + 90)}/${Math.floor(Math.random() * (110 - 60) + 60)}`,
+  spO2: Math.floor(Math.random() * (100 - 85) + 85),
+  glasgowScore: Math.floor(Math.random() * (15 - 3) + 3),
+  consciousness: ['Alert', 'Verbal', 'Pain', 'Unresponsive'][Math.floor(Math.random() * 4)],
+  massiveBleeding: Math.random() > 0.9,
+  respiratoryDistress: Math.random() > 0.8,
+  riskFactors: ['Diabetes', 'Obesity', 'Smoking', 'Family History'].filter(() => Math.random() > 0.6)
 });
 
-// Mock data for the patients
 export const mockPatients: Patient[] = [
   // Level 1 - Critical (Red)
   createPatient("James Wilson", 67, "Male", 98, 1),
@@ -72,12 +89,10 @@ export const mockPatients: Patient[] = [
   createPatient("Tyler Bailey", 26, "Male", 3, 5),
 ];
 
-// Function to get patients by triage level
 export const getPatientsByLevel = (level: 1 | 2 | 3 | 4 | 5) => {
   return mockPatients.filter(patient => patient.triageLevel === level);
 };
 
-// Function to get counts of patients in each level
 export const getPatientCounts = () => {
   const counts = [0, 0, 0, 0, 0];
   
