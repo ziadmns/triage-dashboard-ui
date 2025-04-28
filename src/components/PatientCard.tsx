@@ -4,35 +4,7 @@ import { cn } from '@/lib/utils';
 import { Patient } from './TriageColumn';
 import PatientDetailsDialog from './PatientDetailsDialog';
 
-interface PatientCardProps {
-  name: string;
-  age: number;
-  gender: string;
-  urgency: number;
-  triageLevel: 1 | 2 | 3 | 4 | 5;
-  id: string;
-  chestPainType: string;
-  cholesterol: number;
-  exerciseAngina: boolean;
-  plasmaGlucose: number;
-  skinThickness: number;
-  bmi: number;
-  hypertension: boolean;
-  heartDisease: boolean;
-  residenceType: string;
-  smokingStatus: string;
-  symptoms: string[];
-  temperature: number;
-  heartRate: number;
-  respiratoryRate: number;
-  bloodPressure: string;
-  spO2: number;
-  glasgowScore: number;
-  consciousness: string;
-  massiveBleeding: boolean;
-  respiratoryDistress: boolean;
-  riskFactors: string[];
-}
+interface PatientCardProps extends Patient {}
 
 const PatientCard: React.FC<PatientCardProps> = (patient) => {
   const [showDetails, setShowDetails] = useState(false);
@@ -72,7 +44,7 @@ const PatientCard: React.FC<PatientCardProps> = (patient) => {
           <div className="flex items-center gap-2">
             <Avatar className="h-8 w-8 bg-muted" />
             <div>
-              <h3 className="font-medium text-sm">{patient.name}</h3>
+              <h3 className="font-medium text-sm">Patient {parseInt(patient.id) + 1}</h3>
               <p className="text-xs text-muted-foreground">{patient.age} yrs, {patient.gender}</p>
             </div>
           </div>
@@ -89,7 +61,7 @@ const PatientCard: React.FC<PatientCardProps> = (patient) => {
       </div>
 
       <PatientDetailsDialog
-        patient={patient as Patient}
+        patient={patient}
         open={showDetails}
         onClose={() => setShowDetails(false)}
       />

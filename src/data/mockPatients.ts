@@ -1,93 +1,189 @@
+
 import { Patient } from '@/components/TriageColumn';
 
-const generateId = () => Math.random().toString(36).substring(2, 10);
+// Helper function to convert gender number to string
+const getGenderString = (gender: number): string => {
+  return gender === 1.0 ? 'Male' : 'Female';
+};
 
-const createPatient = (
-  name: string, 
-  age: number, 
-  gender: string, 
-  urgency: number, 
-  triageLevel: 1 | 2 | 3 | 4 | 5
-): Patient => ({
-  id: generateId(),
-  name,
-  age,
-  gender,
-  urgency,
-  triageLevel,
-  chestPainType: ['Typical Angina', 'Atypical Angina', 'Non-Anginal', 'Asymptomatic'][Math.floor(Math.random() * 4)],
-  cholesterol: Math.floor(Math.random() * (300 - 150) + 150),
-  exerciseAngina: Math.random() > 0.5,
-  plasmaGlucose: Math.floor(Math.random() * (200 - 70) + 70),
-  skinThickness: Math.floor(Math.random() * (50 - 10) + 10),
-  bmi: Number((Math.random() * (35 - 18) + 18).toFixed(1)),
-  hypertension: Math.random() > 0.7,
-  heartDisease: Math.random() > 0.8,
-  residenceType: Math.random() > 0.5 ? 'Urban' : 'Rural',
-  smokingStatus: ['Never', 'Former', 'Current'][Math.floor(Math.random() * 3)],
-  symptoms: ['Chest Pain', 'Shortness of Breath', 'Fatigue'].filter(() => Math.random() > 0.5),
-  temperature: Number((Math.random() * (39 - 36) + 36).toFixed(1)),
-  heartRate: Math.floor(Math.random() * (120 - 60) + 60),
-  respiratoryRate: Math.floor(Math.random() * (30 - 12) + 12),
-  bloodPressure: `${Math.floor(Math.random() * (180 - 90) + 90)}/${Math.floor(Math.random() * (110 - 60) + 60)}`,
-  spO2: Math.floor(Math.random() * (100 - 85) + 85),
-  glasgowScore: Math.floor(Math.random() * (15 - 3) + 3),
-  consciousness: ['Alert', 'Verbal', 'Pain', 'Unresponsive'][Math.floor(Math.random() * 4)],
-  massiveBleeding: Math.random() > 0.9,
-  respiratoryDistress: Math.random() > 0.8,
-  riskFactors: ['Diabetes', 'Obesity', 'Smoking', 'Family History'].filter(() => Math.random() > 0.6)
-});
+// Helper function to convert chest pain type number to string
+const getChestPainType = (type: number): string => {
+  const types = {
+    1: 'Typical Angina',
+    2: 'Atypical Angina',
+    3: 'Non-Anginal',
+    4: 'Asymptomatic'
+  };
+  return types[type as keyof typeof types] || 'Unknown';
+};
 
-export const mockPatients: Patient[] = [
-  // Level 1 - Critical (Red)
-  createPatient("James Wilson", 67, "Male", 98, 1),
-  createPatient("Maria Garcia", 58, "Female", 95, 1),
-  createPatient("Robert Johnson", 72, "Male", 92, 1),
-  createPatient("Emily Williams", 45, "Female", 90, 1),
-  createPatient("David Brown", 61, "Male", 87, 1),
-  
-  // Level 2 - Emergency (Orange)
-  createPatient("Sarah Davis", 34, "Female", 89, 2),
-  createPatient("Michael Martinez", 51, "Male", 85, 2),
-  createPatient("Jennifer Robinson", 42, "Female", 82, 2),
-  createPatient("William Thompson", 59, "Male", 80, 2),
-  createPatient("Lisa Anderson", 36, "Female", 77, 2),
-  createPatient("Thomas White", 67, "Male", 75, 2),
-  createPatient("Karen Jackson", 44, "Female", 72, 2),
-  
-  // Level 3 - Urgent (Yellow)
-  createPatient("Daniel Lee", 28, "Male", 70, 3),
-  createPatient("Nancy Harris", 51, "Female", 68, 3),
-  createPatient("Christopher Clark", 39, "Male", 65, 3),
-  createPatient("Patricia Lewis", 47, "Female", 62, 3),
-  createPatient("Matthew Walker", 56, "Male", 60, 3),
-  createPatient("Elizabeth Hall", 33, "Female", 58, 3),
-  createPatient("Anthony Allen", 41, "Male", 55, 3),
-  createPatient("Susan Young", 48, "Female", 52, 3),
-  
-  // Level 4 - Standard (Green)
-  createPatient("Jason Scott", 25, "Male", 48, 4),
-  createPatient("Michelle Green", 37, "Female", 45, 4),
-  createPatient("Kevin Adams", 29, "Male", 42, 4),
-  createPatient("Amanda Baker", 31, "Female", 40, 4),
-  createPatient("Ryan Nelson", 22, "Male", 38, 4),
-  createPatient("Stephanie Hill", 26, "Female", 35, 4),
-  createPatient("Brandon Wright", 24, "Male", 32, 4),
-  createPatient("Rebecca King", 34, "Female", 30, 4),
-  createPatient("Jonathan Evans", 27, "Male", 28, 4),
-  createPatient("Lauren Carter", 30, "Female", 25, 4),
-  
-  // Level 5 - Non-urgent (Blue)
-  createPatient("Brian Phillips", 19, "Male", 22, 5),
-  createPatient("Megan Torres", 21, "Female", 20, 5),
-  createPatient("Justin Mitchell", 18, "Male", 18, 5),
-  createPatient("Heather Collins", 23, "Female", 15, 5),
-  createPatient("Kyle Perez", 20, "Male", 12, 5),
-  createPatient("Whitney Rogers", 25, "Female", 10, 5),
-  createPatient("Zachary Reed", 22, "Male", 8, 5),
-  createPatient("Ashley Cook", 24, "Female", 5, 5),
-  createPatient("Tyler Bailey", 26, "Male", 3, 5),
+const patientData = [
+  {
+    "ID": 0,
+    "age": 40,
+    "gender": 1.0,
+    "chest pain type": 2,
+    "cholesterol": 294,
+    "exercise angina": 0,
+    "plasma glucose": 108.0,
+    "skin_thickness": 43,
+    "bmi": 19.0,
+    "hypertension": 0,
+    "heart_disease": 0,
+    "Residence_type": "Urban",
+    "smoking_status": "never smoked",
+    "Symptom": "Difficulty breathing, Headache",
+    "Temperature (°C)": 37.5,
+    "Heart Rate (bpm)": 86,
+    "Respiratory Rate (breaths/min)": 12,
+    "Blood Pressure (mmHg)": "123/78",
+    "SpO2 (%)": 99,
+    "Glasgow Score": 14,
+    "Consciousness": "Awake",
+    "Massive Bleeding": NaN,
+    "Respiratory Distress": NaN,
+    "Risk Factors": "None",
+    "display_triage_level": 3
+  },
+  {
+    "ID": 1,
+    "age": 49,
+    "gender": 0.0,
+    "chest pain type": 3,
+    "cholesterol": 180,
+    "exercise angina": 0,
+    "plasma glucose": 75.0,
+    "skin_thickness": 47,
+    "bmi": 18.0,
+    "hypertension": 0,
+    "heart_disease": 0,
+    "Residence_type": "Urban",
+    "smoking_status": "never smoked",
+    "Symptom": "Chest pain, Weakness",
+    "Temperature (°C)": 37.3,
+    "Heart Rate (bpm)": 123,
+    "Respiratory Rate (breaths/min)": 24,
+    "Blood Pressure (mmHg)": "93/58",
+    "SpO2 (%)": 86,
+    "Glasgow Score": 9,
+    "Consciousness": "Responds to Pain",
+    "Massive Bleeding": NaN,
+    "Respiratory Distress": NaN,
+    "Risk Factors": "Hypertension, Cardiovascular disease",
+    "display_triage_level": 2
+  },
+  {
+    "ID": 2,
+    "age": 37,
+    "gender": 1.0,
+    "chest pain type": 2,
+    "cholesterol": 294,
+    "exercise angina": 0,
+    "plasma glucose": 98.0,
+    "skin_thickness": 53,
+    "bmi": 23.0,
+    "hypertension": 0,
+    "heart_disease": 0,
+    "Residence_type": "Urban",
+    "smoking_status": "never smoked",
+    "Symptom": "Difficulty breathing",
+    "Temperature (°C)": 36.7,
+    "Heart Rate (bpm)": 94,
+    "Respiratory Rate (breaths/min)": 14,
+    "Blood Pressure (mmHg)": "130/82",
+    "SpO2 (%)": 95,
+    "Glasgow Score": 13,
+    "Consciousness": "Awake",
+    "Massive Bleeding": NaN,
+    "Respiratory Distress": NaN,
+    "Risk Factors": "Cardiovascular disease",
+    "display_triage_level": 4
+  },
+  {
+    "ID": 3,
+    "age": 48,
+    "gender": 0.0,
+    "chest pain type": 4,
+    "cholesterol": 214,
+    "exercise angina": 1,
+    "plasma glucose": 72.0,
+    "skin_thickness": 51,
+    "bmi": 18.0,
+    "hypertension": 0,
+    "heart_disease": 0,
+    "Residence_type": "Urban",
+    "smoking_status": "never smoked",
+    "Symptom": "Fever",
+    "Temperature (°C)": 39.4,
+    "Heart Rate (bpm)": 124,
+    "Respiratory Rate (breaths/min)": 28,
+    "Blood Pressure (mmHg)": "136/71",
+    "SpO2 (%)": 88,
+    "Glasgow Score": 10,
+    "Consciousness": "Responds to Pain",
+    "Massive Bleeding": NaN,
+    "Respiratory Distress": NaN,
+    "Risk Factors": "Cancer",
+    "display_triage_level": 2
+  },
+  {
+    "ID": 4,
+    "age": 54,
+    "gender": 1.0,
+    "chest pain type": 3,
+    "cholesterol": 195,
+    "exercise angina": 0,
+    "plasma glucose": 108.0,
+    "skin_thickness": 90,
+    "bmi": 21.0,
+    "hypertension": 0,
+    "heart_disease": 0,
+    "Residence_type": "Urban",
+    "smoking_status": "never smoked",
+    "Symptom": "Weakness",
+    "Temperature (°C)": 37.5,
+    "Heart Rate (bpm)": 70,
+    "Respiratory Rate (breaths/min)": 20,
+    "Blood Pressure (mmHg)": "122/79",
+    "SpO2 (%)": 99,
+    "Glasgow Score": 13,
+    "Consciousness": "Awake",
+    "Massive Bleeding": NaN,
+    "Respiratory Distress": NaN,
+    "Risk Factors": "Cancer",
+    "display_triage_level": 5
+  }
 ];
+
+export const mockPatients: Patient[] = patientData.map(p => ({
+  id: p.ID.toString(),
+  name: `Patient ${p.ID + 1}`,
+  age: p.age,
+  gender: getGenderString(p.gender),
+  urgency: Math.max(0, Math.min(100, (6 - p.display_triage_level) * 20)), // Convert triage level to urgency percentage
+  triageLevel: p.display_triage_level as 1 | 2 | 3 | 4 | 5,
+  chestPainType: getChestPainType(p['chest pain type']),
+  cholesterol: p.cholesterol,
+  exerciseAngina: p['exercise angina'] === 1,
+  plasmaGlucose: p['plasma glucose'],
+  skinThickness: p.skin_thickness,
+  bmi: p.bmi,
+  hypertension: p.hypertension === 1,
+  heartDisease: p.heart_disease === 1,
+  residenceType: p.Residence_type,
+  smokingStatus: p.smoking_status,
+  symptoms: p.Symptom.split(', '),
+  temperature: p['Temperature (°C)'],
+  heartRate: p['Heart Rate (bpm)'],
+  respiratoryRate: p['Respiratory Rate (breaths/min)'],
+  bloodPressure: p['Blood Pressure (mmHg)'],
+  spO2: p['SpO2 (%)'],
+  glasgowScore: p.Glasgow_Score,
+  consciousness: p.Consciousness,
+  massiveBleeding: false,
+  respiratoryDistress: false,
+  riskFactors: p['Risk Factors'] === 'None' ? [] : p['Risk Factors'].split(', ')
+}));
 
 export const getPatientsByLevel = (level: 1 | 2 | 3 | 4 | 5) => {
   return mockPatients.filter(patient => patient.triageLevel === level);
@@ -95,10 +191,8 @@ export const getPatientsByLevel = (level: 1 | 2 | 3 | 4 | 5) => {
 
 export const getPatientCounts = () => {
   const counts = [0, 0, 0, 0, 0];
-  
   mockPatients.forEach(patient => {
     counts[patient.triageLevel - 1]++;
   });
-  
   return counts;
 };
