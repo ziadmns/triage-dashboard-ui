@@ -2,7 +2,7 @@
 import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Patient } from './TriageColumn';
-import { Heart, ThermometerSun, HeartPulse, Lungs, Droplets } from 'lucide-react';
+import { Heart, ThermometerSun, HeartPulse, Droplet, BriefcaseMedical } from 'lucide-react';
 
 interface PatientDetailsDialogProps {
   patient: Patient;
@@ -76,7 +76,7 @@ const PatientDetailsDialog: React.FC<PatientDetailsDialogProps> = ({
 
           <div className="space-y-2">
             <h3 className="font-semibold flex items-center gap-2">
-              <Lungs className="h-5 w-5 text-blue-500" />
+              <BriefcaseMedical className="h-5 w-5 text-blue-500" />
               Clinical Assessment
             </h3>
             <div className="grid grid-cols-2 gap-2 text-sm">
@@ -91,7 +91,7 @@ const PatientDetailsDialog: React.FC<PatientDetailsDialogProps> = ({
 
           <div className="col-span-full space-y-2">
             <h3 className="font-semibold flex items-center gap-2">
-              <Droplets className="h-5 w-5 text-purple-500" />
+              <Droplet className="h-5 w-5 text-purple-500" />
               Additional Information
             </h3>
             <div className="grid grid-cols-2 gap-2 text-sm">
@@ -114,4 +114,3 @@ const PatientDetailsDialog: React.FC<PatientDetailsDialogProps> = ({
 };
 
 export default PatientDetailsDialog;
-

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
 import PatientCard from './PatientCard';
@@ -84,11 +85,7 @@ const TriageColumn: React.FC<TriageColumnProps> = ({ level, title, patients }) =
           sortedPatients.map(patient => (
             <PatientCard
               key={patient.id}
-              name={patient.name}
-              age={patient.age}
-              gender={patient.gender}
-              urgency={patient.urgency}
-              triageLevel={level}
+              {...patient}
             />
           ))
         )}

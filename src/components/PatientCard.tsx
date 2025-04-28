@@ -5,7 +5,35 @@ import { cn } from '@/lib/utils';
 import { Patient } from './TriageColumn';
 import PatientDetailsDialog from './PatientDetailsDialog';
 
-interface PatientCardProps extends Patient {}
+interface PatientCardProps {
+  name: string;
+  age: number;
+  gender: string;
+  urgency: number;
+  triageLevel: 1 | 2 | 3 | 4 | 5;
+  id: string;
+  chestPainType: string;
+  cholesterol: number;
+  exerciseAngina: boolean;
+  plasmaGlucose: number;
+  skinThickness: number;
+  bmi: number;
+  hypertension: boolean;
+  heartDisease: boolean;
+  residenceType: string;
+  smokingStatus: string;
+  symptoms: string[];
+  temperature: number;
+  heartRate: number;
+  respiratoryRate: number;
+  bloodPressure: string;
+  spO2: number;
+  glasgowScore: number;
+  consciousness: string;
+  massiveBleeding: boolean;
+  respiratoryDistress: boolean;
+  riskFactors: string[];
+}
 
 const PatientCard: React.FC<PatientCardProps> = (patient) => {
   const [showDetails, setShowDetails] = useState(false);
@@ -64,7 +92,7 @@ const PatientCard: React.FC<PatientCardProps> = (patient) => {
       </div>
 
       <PatientDetailsDialog
-        patient={patient}
+        patient={patient as Patient}
         open={showDetails}
         onClose={() => setShowDetails(false)}
       />
@@ -73,4 +101,3 @@ const PatientCard: React.FC<PatientCardProps> = (patient) => {
 };
 
 export default PatientCard;
-
