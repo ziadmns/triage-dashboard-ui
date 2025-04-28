@@ -1,4 +1,3 @@
-
 import { Patient } from '@/components/TriageColumn';
 
 // Helper function to convert gender number to string
@@ -43,7 +42,9 @@ const patientData = [
     "Massive Bleeding": NaN,
     "Respiratory Distress": NaN,
     "Risk Factors": "None",
-    "display_triage_level": 3
+    "display_triage_level": 3,
+    "priority_score": 50,
+    "priority_score_percentage": 55.56
   },
   {
     "ID": 1,
@@ -70,7 +71,9 @@ const patientData = [
     "Massive Bleeding": NaN,
     "Respiratory Distress": NaN,
     "Risk Factors": "Hypertension, Cardiovascular disease",
-    "display_triage_level": 2
+    "display_triage_level": 2,
+    "priority_score": 70,
+    "priority_score_percentage": 51.85
   },
   {
     "ID": 2,
@@ -97,7 +100,9 @@ const patientData = [
     "Massive Bleeding": NaN,
     "Respiratory Distress": NaN,
     "Risk Factors": "Cardiovascular disease",
-    "display_triage_level": 4
+    "display_triage_level": 4,
+    "priority_score": 20,
+    "priority_score_percentage": 30.77
   },
   {
     "ID": 3,
@@ -124,7 +129,9 @@ const patientData = [
     "Massive Bleeding": NaN,
     "Respiratory Distress": NaN,
     "Risk Factors": "Cancer",
-    "display_triage_level": 2
+    "display_triage_level": 2,
+    "priority_score": 95,
+    "priority_score_percentage": 70.37
   },
   {
     "ID": 4,
@@ -151,7 +158,38 @@ const patientData = [
     "Massive Bleeding": NaN,
     "Respiratory Distress": NaN,
     "Risk Factors": "Cancer",
-    "display_triage_level": 5
+    "display_triage_level": 5,
+    "priority_score": 25,
+    "priority_score_percentage": 41.67
+  },
+  {
+    "ID": 5,
+    "age": 39,
+    "gender": 1.0,
+    "chest pain type": 3,
+    "cholesterol": 294,
+    "exercise angina": 0,
+    "plasma glucose": 86.0,
+    "skin_thickness": 49,
+    "bmi": 21.0,
+    "hypertension": 0,
+    "heart_disease": 0,
+    "Residence_type": "Urban",
+    "smoking_status": "never smoked",
+    "Symptom": "Abdominal pain",
+    "Temperature (°C)": 37.5,
+    "Heart Rate (bpm)": 123,
+    "Respiratory Rate (breaths/min)": 25,
+    "Blood Pressure (mmHg)": "145/65",
+    "SpO2 (%)": 92,
+    "Glasgow Score": 11,
+    "Consciousness": "Responds to Pain",
+    "Massive Bleeding": NaN,
+    "Respiratory Distress": NaN,
+    "Risk Factors": "Hypertension, Diabetes",
+    "display_triage_level": 2,
+    "priority_score": 55,
+    "priority_score_percentage": 40.74
   }
 ];
 
@@ -160,7 +198,7 @@ export const mockPatients: Patient[] = patientData.map(p => ({
   name: `Patient ${p.ID + 1}`,
   age: p.age,
   gender: getGenderString(p.gender),
-  urgency: Math.max(0, Math.min(100, (6 - p.display_triage_level) * 20)),
+  urgency: p.priority_score_percentage, // Use the new priority score percentage
   triageLevel: p.display_triage_level as 1 | 2 | 3 | 4 | 5,
   chestPainType: getChestPainType(p['chest pain type']),
   cholesterol: p.cholesterol,
